@@ -7,11 +7,11 @@ export const routes = [
     {
         method: 'GET',
         path: '/',
-        handler: async (req, res) => { // Adicionado async
+        handler: async (req, res) => {
             try {
                 const { search } = req.query;
-                const users = await database.select('api', search); // await na chamada do banco
-                return res.status(200).json(users); // Retorna com status 200
+                const users = await database.select('api', search);
+                return res.status(200).json(users);
             } catch (error) {
                 console.error("Erro no GET /api:", error);
                 return res.status(500).json({ message: "Erro interno ao buscar usuários." });
@@ -21,14 +21,13 @@ export const routes = [
     {
         method: 'POST',
         path: '/',
-        handler: async (req, res) => { // Adicionado async
+        handler: async (req, res) => {
             console.log("----- INÍCIO DO HANDLER POST ----- /api");
             console.log("req (completo):", req);
 
             try {
                 const { name, email, senha, qtdpet } = req.body;
 
-                // Validação básica (adicione mais validações conforme necessário)
                 if (!name || !email || !senha) {
                     return res.status(400).json({ message: "Campos obrigatórios faltando (name, email, senha)." });
                 }
@@ -37,12 +36,12 @@ export const routes = [
                     id: randomUUID(),
                     name,
                     email,
-                    senha, // Lembre-se de HASH a senha em produção!!!
+                    senha,
                     qtdpet,
                 };
-                const result = await database.insert('api', user); // await na chamada do banco
-                console.log("Resultado do insert:", result); // Log para depuração
-                return res.status(201).json({ message: "Usuário criado com sucesso!", user: result }); // Retorna 201 e o usuário criado
+                const result = await database.insert('api', user);
+                console.log("Resultado do insert:", result);
+                return res.status(201).json({ message: "Usuário criado com sucesso!", user: result });
             } catch (error) {
                 console.error("Erro no POST /api:", error);
                 return res.status(500).json({ message: "Erro interno ao criar usuário." });
@@ -52,31 +51,29 @@ export const routes = [
     {
         method: 'PUT',
         path: '/perfil/:id',
-        handler: async (req, res) => { // Adicionado async
+        handler: async (req, res) => {
             try {
                 const { id } = req.params;
-                const { name, email, senha, qtdpet } = req.body; // Incluído email
-                if (!id) { //Verifica de o id foi informado
+                const { name, email, senha, qtdpet } = req.body;
+                if (!id) {
                     return res.status(400).json({ message: 'ID do usuário não fornecido.' });
                 }
-                // Validação básica (adicione mais validações conforme necessário)
-                if (!name && !email && !senha && !qtdpet) { //Verifica se algum dado foi informado
+                if (!name && !email && !senha && !qtdpet) {
                     return res.status(400).json({ message: "Nenhum dado para atualizar fornecido." });
                 }
 
-                const updateData = {}; //Objeto que vai armazenar os dados a serem atualizados
-                //Verifica quais dados foram passados e adiciona ao updateData
+                const updateData = {};
                 if (name) updateData.name = name;
                 if (email) updateData.email = email;
-                if (senha) updateData.senha = senha;  // Lembre-se de HASH a senha em produção!!!
+                if (senha) updateData.senha = senha;
                 if (qtdpet) updateData.qtdpet = qtdpet;
 
-                const success = await database.update('api', id, updateData); // await na chamada do banco
+                const success = await database.update('api', id, updateData);
 
                 if (success) {
-                    return res.status(204).send(); // 204 No Content para sucesso
+                    return res.status(204).send();
                 } else {
-                    return res.status(404).json({ message: "Usuário não encontrado." }); // 404 se o update falhar (ex: ID não existe)
+                    return res.status(404).json({ message: "Usuário não encontrado." });
                 }
             } catch (error) {
                 console.error("Erro no PUT /api/perfil/:id:", error);
@@ -86,16 +83,16 @@ export const routes = [
     },
     {
         method: 'DELETE',
-        path: '/:id', // CORRIGIDO: Removido o /api duplicado
-        handler: async (req, res) => { // Adicionado async
+        path: '/:id',
+        handler: async (req, res) => {
             try {
                 const { id } = req.params;
-                const success = await database.delete('api', id); // await na chamada do banco
+                const success = await database.delete('api', id);
 
                 if (success) {
-                    return res.status(204).send(); // 204 No Content para sucesso
+                    return res.status(204).send();
                 } else {
-                    return res.status(404).json({ message: "Usuário não encontrado." }); // 404 se o delete falhar (ex: ID não existe)
+                    return res.status(404).json({ message: "Usuário não encontrado." });
                 }
             } catch (error) {
                 console.error("Erro no DELETE /api/:id:", error);
@@ -120,7 +117,6 @@ export const routes = [
                     return res.status(404).json({ message: 'Usuário não encontrado.' });
                 }
 
-                // SIMPLIFICAÇÃO EXTREMA: Comparação de senha em texto plano (INSEGURO!)
                 if (user.senha !== senha) {
                     return res.status(401).json({ message: 'Credenciais inválidas.' });
                 }
@@ -135,7 +131,7 @@ export const routes = [
     {
         method: 'GET',
         path: '/perfil',
-        handler: async (req, res) => { // Mantido async, mesmo sem operação de banco de dados (boa prática)
+        handler: async (req, res) => {
             try {
                 return res.status(200).json({ message: 'Rota de perfil (sem proteção real no backend - Opção 1). Autenticação simulada no frontend.' });
             } catch (error) {
@@ -146,8 +142,8 @@ export const routes = [
     },
     {
         method: 'PUT',
-        path: '/perfil/:id',  // CORRIGIDO
-        handler: async (req, res) => { // Mantido async
+        path: '/perfil/:id',
+        handler: async (req, res) => {
             try {
                 const { id } = req.params;
                 const { name, qtdpet, senha, email } = req.body;
@@ -165,7 +161,7 @@ export const routes = [
                 if (senha) dadosParaAtualizar.senha = senha;
                 if (qtdpet) dadosParaAtualizar.qtdpet = qtdpet;
 
-                const success = await database.update('api', id, dadosParaAtualizar); // await na chamada do banco
+                const success = await database.update('api', id, dadosParaAtualizar);
 
                 if (success) {
                     return res.status(204).send();

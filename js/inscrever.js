@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const qtdpetValue = qtdpetSelect.value;
         const qtdpet = qtdpetValue === '4+' ? '4' : qtdpetValue;
 
-        // ... (seu código anterior) ...
-
         const NovoUsuario = {
             name: nome,
             email: email,
@@ -20,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             qtdpet: qtdpet
         };
 
-        console.log("NovoUsuario (antes do fetch):", NovoUsuario); // ADICIONE ESTE LOG
+        console.log("NovoUsuario (antes do fetch):", NovoUsuario);
 
         fetch('/.netlify/functions/api', {
             method: 'POST',
@@ -42,3 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('Service Worker registrado com sucesso:', registration);
+        })
+        .catch(err => {
+          console.error('Falha ao registrar o Service Worker:', err);
+        });
+    });
+  }

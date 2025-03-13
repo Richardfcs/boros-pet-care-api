@@ -1,14 +1,14 @@
 {
     "name": "boros-pet-care-api",
     "version": "1.0.0",
-    "description": "",
+    "description": "um web app para cuidados para pets",
     "main": "index.js",
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
-    "author": "",
+    "author": "Richardfcs",
     "license": "ISC",
     "dependencies": {
         "@supabase/supabase-js": "^2.49.1",

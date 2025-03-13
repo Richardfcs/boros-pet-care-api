@@ -203,16 +203,16 @@ button:hover {
     color: #ffffff;
 }
 .map-responsive {
-    overflow: hidden; /* Esconde overflow do iframe se necessário */
-    padding-bottom: 75%; /* Proporção 4:3 (ajuste conforme necessário - ex: 100% para 1:1, 56.25% para 16:9) */
-    position: relative; /* Posicionamento relativo para o container */
-    height: 0; /* Altura zero, a proporção do padding-bottom define a altura */
+    overflow: hidden;
+    padding-bottom: 75%;
+    position: relative;
+    height: 0;
 }
 
 .map-responsive iframe {
-    left: 0; /* Alinha o iframe à esquerda do container */
-    top: 0; /* Alinha o iframe ao topo do container */
-    height: 100%; /* Iframe ocupa 100% da altura do container */
-    width: 100%; /* Iframe ocupa 100% da largura do container */
-    position: absolute; /* Posicionamento absoluto para o iframe dentro do container */
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }

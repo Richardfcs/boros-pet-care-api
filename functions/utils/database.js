@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL; // URL do seu projeto Supabase
-const supabaseKey = process.env.SUPABASE_KEY; // Chave anônima (anon key) do Supabase
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
     throw new Error("As variáveis de ambiente SUPABASE_URL e SUPABASE_KEY devem ser definidas.");
@@ -16,12 +16,11 @@ export class Database {
 
         if (search) {
             if (search.name) {
-                query = query.ilike('name', `%${search.name}%`); // Busca case-insensitive
+                query = query.ilike('name', `%${search.name}%`);
             }
             if (search.email) {
-                query = query.eq('email', search.email); // Busca exata
+                query = query.eq('email', search.email);
             }
-            // Adicione outras condições de busca conforme necessário
         }
 
         const { data, error } = await query;
@@ -75,7 +74,7 @@ export class Database {
             .from(table)
             .select("*")
             .eq('email', email)
-            .single(); // Espera um único resultado
+            .single();
 
 
         if (error) {
@@ -83,6 +82,6 @@ export class Database {
             return null;
         }
 
-        return data; // Retorna o usuário encontrado (ou null se não encontrar)
+        return data;
     }
 }

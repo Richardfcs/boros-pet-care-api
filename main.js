@@ -25,10 +25,10 @@ document.querySelectorAll('.offcanvas a.nav-link').forEach(link => {
   });
 });
 document.addEventListener('DOMContentLoaded', () => {
-  const linkPerfilNome = document.getElementById('link-perfil-nome'); // Seleciona o link pelo ID
-  const username = localStorage.getItem('username'); // Obtém o nome do usuário do localStorage
+  const linkPerfilNome = document.getElementById('link-perfil-nome');
+  const username = localStorage.getItem('username');
 
-  if (linkPerfilNome && username) { // Verifica se o link e o username foram encontrados
-      linkPerfilNome.textContent = username; // Define o texto do link para o nome do usuário
+  if (linkPerfilNome && username) {
+      linkPerfilNome.textContent = username;
   }
 });
