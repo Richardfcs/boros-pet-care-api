@@ -1,0 +1,4 @@
+[functions]
+  external_node_modules = ["express", "serverless-http", "@supabase/supabase-js", "body-parser", "cors"]
+  node_bundler = "esbuild"
+  directory = "functions"
